@@ -5,10 +5,13 @@ import React, { Component } from "react";
 import Slider from "react-slick";
 
 const Wrap = styled.div`
-  width: 84%;
+  width: 500px;
   color: #FFF;
   margin: auto;
+
     .slick-slide>div>div>img {
+      width: 100%;
+      max-width:50vw;
       margin: auto;
     }
     .slick-prev:before {
@@ -34,12 +37,11 @@ export default class SimpleSlider extends Component {
 
         return (
             <Wrap>
-                <h2> Single Item</h2>
                 <Slider {...settings}>
                     {
                         images.map((content, index)=>
                             <div key={index}>
-                                <img src={content.dataURL} alt=""/>
+                                <img src={content.dataURL} alt={`${index+1}번 이미지`}/>
                             </div>
                         )
                     }
