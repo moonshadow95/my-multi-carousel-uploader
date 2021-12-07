@@ -4,6 +4,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import parse from "html-react-parser";
 import RmiUploader from "./RMIUploader";
 import styled from "styled-components";
+import Preview from "./Preview";
+
 
 const Wrap = styled.div`
   width: 84%;
@@ -21,6 +23,7 @@ const Wrap = styled.div`
 
 const Editor = ({images,setImages}) => {
     const [content ,setContent] = useState('');
+    const [selected, setSelected] = useState([])
 
     return(
         <Wrap>
@@ -42,17 +45,24 @@ const Editor = ({images,setImages}) => {
                 //     console.log( 'Focus.', editor );
                 // } }
             />
-            <h1>Preview</h1>
-            {parse(content)}
-            <RmiUploader images={images} setImages={setImages}/>
+            <Preview content={content}
+                     selected={selected} setSelected={setSelected}
+            />
+            <RmiUploader
+                images={images} setImages={setImages}
+                selected={selected} setSelected={setSelected}
+            />
         </Wrap>
 )};
 
 window.addEventListener('load', ()=>{
     const baseBtn = document.querySelector('.ck-toolbar__items>button:last-child');
+    console.log(baseBtn)
     const toggleBtn = document.querySelector('.uploader__toggle')
     let x = window.pageXOffset + baseBtn.getBoundingClientRect().right;
+    console.log(baseBtn.getBoundingClientRect())
     let y = window.pageYOffset + baseBtn.getBoundingClientRect().top;
+    console.log(y)
     toggleBtn.style.top = y.toString()+'px'
     toggleBtn.style.left = x.toString()+'px'
 })

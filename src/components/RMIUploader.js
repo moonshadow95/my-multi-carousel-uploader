@@ -48,18 +48,26 @@ const Modal = styled.div`
 //     formData.append("image", file)
 // }
 
-const RmiUploader = ({images, setImages}) => {
+const RmiUploader = ({images, setImages, selected, setSelected}) => {
     const [visible, setVisible] = useState(true);
     const hideModal = () => {
         setVisible(false);
     };
     const onUpload = async (data) => {
-        data.map((item, index)=>item["id"]=images[images.length-1].id + index -1)
+        if(images.length > 0){
+            data.map((item, index)=>item["id"]=images[images.length-1].id + index -1)
+        }else{
+            // 빈 배열일 경우 id는 1부터 시작
+            data.map((item, index)=>item["id"]=index -1)
+        }
         setImages(Array.from(new Set([...images,...data])))
-        console.log(images)
     }
     const onSelect = (data) => {
         console.log("Select files", data);
+        data.map(
+            item => setSelected(prev=>[...prev, item])
+        )
+
     };
     const onRemove = (id) => {
         setImages(images.filter((item) => item.id!==id))

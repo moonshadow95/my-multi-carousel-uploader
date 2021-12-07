@@ -5,7 +5,8 @@ import React, { Component } from "react";
 import Slider from "react-slick";
 
 const Wrap = styled.div`
-  width: 500px;
+  width: 70%;
+  max-width: 800px;
   color: #FFF;
   margin: auto;
 
@@ -16,7 +17,6 @@ const Wrap = styled.div`
     }
     .slick-prev:before {
       color: black;
-      left: 0;
     }
     .slick-next:before {
       opacity: 1;

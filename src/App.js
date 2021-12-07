@@ -44,7 +44,7 @@ function App() {
             dataURL: "https://picsum.photos/seed/10/600",
         },])
     return (
-        <div className="App">
+        <div className="App" style={{paddingBottom: '-100px'}}>
             <Editor images={images} setImages={setImages}/>
         </div>
     );
