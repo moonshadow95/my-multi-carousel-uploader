@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import parse from "html-react-parser";
 import RmiUploader from "./RMIUploader";
 import styled from "styled-components";
 import Preview from "./Preview";
@@ -24,12 +23,13 @@ const Wrap = styled.div`
 const Editor = ({images,setImages}) => {
     const [content ,setContent] = useState('');
     const [selected, setSelected] = useState([])
+    const [editorData, setEditorData] = useState(content)
 
     return(
         <Wrap>
             <CKEditor
                 editor={ ClassicEditor }
-                data=""
+                data={editorData}
                 onChange={ ( event, editor ) => {
                     const data = editor.getData();
                     setContent(data)
@@ -51,20 +51,33 @@ const Editor = ({images,setImages}) => {
             <RmiUploader
                 images={images} setImages={setImages}
                 selected={selected} setSelected={setSelected}
+                setContent={setContent}
+                editorData={editorData} setEditorData={setEditorData}
             />
         </Wrap>
 )};
 
+// 슬라이드 추가 버튼 위치조정 (반응형)
 window.addEventListener('load', ()=>{
-    const baseBtn = document.querySelector('.ck-toolbar__items>button:last-child');
-    console.log(baseBtn)
+    const baseBtn = document.querySelector('.ck-editor__top');
     const toggleBtn = document.querySelector('.uploader__toggle')
-    let x = window.pageXOffset + baseBtn.getBoundingClientRect().right;
-    console.log(baseBtn.getBoundingClientRect())
-    let y = window.pageYOffset + baseBtn.getBoundingClientRect().top;
-    console.log(y)
-    toggleBtn.style.top = y.toString()+'px'
-    toggleBtn.style.left = x.toString()+'px'
+    let x1 = baseBtn.getBoundingClientRect().right;
+    let y1 = baseBtn.getBoundingClientRect().top;
+    let x2 = toggleBtn.getBoundingClientRect().width;
+    let y2 = toggleBtn.getBoundingClientRect().height;
+
+    function positioning (x1,x2,y1,y2){
+        toggleBtn.style.left = (x1-x2).toString()+'px'
+        toggleBtn.style.top = (y1+y2).toString()+'px'
+    }
+    positioning(x1,x2,y1,y2)
+    window.addEventListener('resize', ()=>{
+        x1 = baseBtn.getBoundingClientRect().right;
+        y1 = baseBtn.getBoundingClientRect().top;
+        x2 = toggleBtn.getBoundingClientRect().width;
+        y2 = toggleBtn.getBoundingClientRect().height;
+        positioning(x1,x2,y1,y2)
+    })
 })
 
 export default Editor;

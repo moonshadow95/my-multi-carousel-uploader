@@ -5,6 +5,7 @@ import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
 import CloseIcon from '@mui/icons-material/Close';
 import SimpleSlider from "./Carousel";
 import styled from 'styled-components'
+import {CKEditor} from './Editor'
 
 const Modal = styled.div`
     position: absolute;
@@ -48,7 +49,7 @@ const Modal = styled.div`
 //     formData.append("image", file)
 // }
 
-const RmiUploader = ({images, setImages, selected, setSelected}) => {
+const RmiUploader = ({images, setImages, setSelected, editorData, setEditorData, setContent }) => {
     const [visible, setVisible] = useState(true);
     const hideModal = () => {
         setVisible(false);
@@ -63,11 +64,23 @@ const RmiUploader = ({images, setImages, selected, setSelected}) => {
         setImages(Array.from(new Set([...images,...data])))
     }
     const onSelect = (data) => {
-        console.log("Select files", data);
         data.map(
             item => setSelected(prev=>[...prev, item])
         )
+        const src = data[0].dataURL
+        // 선택 이미지 중 이미지 복사
+        window.getSelection().removeAllRanges()
+        let range = document.createRange()
+        const firstImage = document.querySelector('.ant-image:first-child img')
+        range.selectNode(firstImage)
+        window.getSelection().addRange(range)
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges()
+        // 에디터에 붙여넣기
 
+
+
+        setVisible(prev => !prev)
     };
     const onRemove = (id) => {
         setImages(images.filter((item) => item.id!==id))
@@ -84,17 +97,17 @@ function RMIUToggle () {
                 className="uploader__toggle"
                 sx={{minWidth:29.89, padding: 0,height:29.89}}
                 onClick={RMIUToggle}
+                style={{padding:'20px', marginTop:'4px'}}
+
             >
-                {visible ?
-                    <CloseIcon sx={{color:"black"}}/>:
-                    <ViewCarouselIcon sx={{color:"black"}}/>
-                }
+                <ViewCarouselIcon sx={{color:"black"}}/>
             </Button>
             {visible &&
             <Modal>
                 <Button
                     className="uploader__close"
                     sx={{minWidth:29.89, padding: 0,height:29.89}}
+                    style={{padding:'20px', marginTop:'4px'}}
                     onClick={RMIUToggle}
                 >
                     {visible ?
