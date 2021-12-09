@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {RMIUploader} from 'react-multiple-image-uploader';
 import Button from '@mui/material/Button';
-import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
 import CloseIcon from '@mui/icons-material/Close';
-import SimpleSlider from "./Carousel";
+import SimpleSlider from "./SimpleSlider";
 import styled from 'styled-components'
 import {CKEditor} from './Editor'
 
@@ -11,7 +10,7 @@ const Modal = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    padding:150px 0;
+    padding:0 0 150px 0px;
     width: 100%;
     z-index: 1;
     background: rgba(230, 230, 230, 0.8);
@@ -23,10 +22,11 @@ const Modal = styled.div`
       max-width: 80%;
       margin: auto;
     }
-    .uploader__close {
-      position: absolute;
-      top: 40px;
-      right: 40px;
+    .modal__close{
+      display:block;
+      margin: 20px 20px 0 auto;
+      padding: 10px;
+      background-color: #000;
     }
 `
 // import Axios from 'axios';
@@ -50,7 +50,7 @@ const Modal = styled.div`
 //     formData.append("image", file)
 // }
 
-const RmiUploader = ({images, setImages, setSelected, editorData, setEditorData, setContent }) => {
+const RmiUploader = ({images, setImages, setSelected, setImageArray, selected, imageArray,  editorData, setEditorData, setContent }) => {
     const [visible, setVisible] = useState(false);
     const hideModal = () => {
         setVisible(false);
@@ -68,19 +68,7 @@ const RmiUploader = ({images, setImages, setSelected, editorData, setEditorData,
         data.map(
             item => setSelected(prev=>[...prev, item])
         )
-        const src = data[0].dataURL
-        // 선택 이미지 중 이미지 복사
-        window.getSelection().removeAllRanges()
-        let range = document.createRange()
-        const firstImage = document.querySelector('.ant-image:first-child img')
-        range.selectNode(firstImage)
-        window.getSelection().addRange(range)
-        document.execCommand('copy');
-        window.getSelection().removeAllRanges()
-        // 에디터에 붙여넣기
-
-
-
+        setImageArray(selected)
         setVisible(prev => !prev)
     };
     const onRemove = (id) => {
@@ -95,28 +83,23 @@ function RMIUToggle () {
     return (
         <div>
             <Button
-                className="uploader__toggle"
-                sx={{minWidth:29.89, padding: 0,height:29.89}}
+                variant="contained"
                 onClick={RMIUToggle}
-                style={{padding:'20px', marginTop:'4px'}}
-
             >
-                <ViewCarouselIcon sx={{color:"black"}}/>
+                이미지 슬라이드 추가
             </Button>
             {visible &&
             <Modal>
                 <Button
-                    className="uploader__close"
-                    sx={{minWidth:29.89, padding: 0,height:29.89}}
-                    style={{padding:'20px', marginTop:'4px'}}
+                    variant="contained"
+                    className='modal__close'
                     onClick={RMIUToggle}
                 >
                     {visible ?
-                        <CloseIcon sx={{color:"black"}}/>:
-                        <ViewCarouselIcon sx={{color:"black"}}/>
+                        <CloseIcon sx={{color:"white"}}/>:
+                        '이미지 슬라이드 추가'
                     }
                 </Button>
-                <SimpleSlider images={images} setImages={setImages}/>
                 <RMIUploader
                     isOpen={visible}
                     hideModal={hideModal}

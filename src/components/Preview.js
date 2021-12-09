@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import SimpleSlider from "./Carousel";
+import SimpleSlider from "./SimpleSlider";
 import Section from "./Section";
 
 const PreviewContainer = styled.div`
@@ -14,16 +14,18 @@ const PreviewContainer = styled.div`
   }
 `
 
-const Preview = ({contentArray, selected, setSelected}) => {
+const Preview = ({contentArray, imageArray}) => {
+    console.log('imageArray', imageArray)
     return (
         <PreviewContainer>
             <h2>미리보기</h2>
-            <div>
-                {contentArray.length > 0 && contentArray.map((content, index) =>
+
+            {contentArray.length > 0 && contentArray.map((content, index) =>
+                <div>
                     <Section content={content} key={index}/>
-                )}
-                <SimpleSlider images={selected} setImages={setSelected}/>
-            </div>
+                    <SimpleSlider images={imageArray} />
+                </div>
+            )}
         </PreviewContainer>
 )};
 

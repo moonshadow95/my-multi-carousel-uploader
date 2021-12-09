@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import Slider from "react-slick";
 
 const Wrap = styled.div`
-  width: 70%;
+  width: 40%;
   max-width: 800px;
   color: #FFF;
   margin: auto;
@@ -34,7 +34,7 @@ export default class SimpleSlider extends Component {
             slidesToShow: 1,
             slidesToScroll: 1
         };
-
+        console.log(`images`, images)
         return (
             <Wrap>
                 <Slider {...settings}>

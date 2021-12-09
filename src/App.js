@@ -60,6 +60,7 @@ function App() {
         },])
     const [content ,setContent] = useState('');
     const [contentArray, setContentArray] = useState([])
+    const [imageArray, setImageArray] = useState([]);
     const [selected, setSelected] = useState([])
     return (
         <Main className="App">
@@ -70,10 +71,14 @@ function App() {
                     selected={selected}
                     setSelected={setSelected}
                     setContentArray={setContentArray}
+                    setImageArray={setImageArray}
+                    imageArray={imageArray}
             />
             <Preview contentArray={contentArray}
                      selected={selected}
                      setSelected={setSelected}
+                     imageArray={imageArray}
+                     setImageArray={setImageArray}
             />
         </Main>
     );
