@@ -1,21 +1,27 @@
 import React from 'react';
-import parse from "html-react-parser";
 import styled from 'styled-components';
 import SimpleSlider from "./Carousel";
+import Section from "./Section";
 
 const PreviewContainer = styled.div`
-    margin: 1.5em;
+    border-left: 1px solid #000;
     .slick-slider{
         margin-bottom: 76px;
     }
+  @media (max-width:1450px){
+    border-left: none;
+    border-top: 1px solid #000;
+  }
 `
 
-const Preview = ({content, selected, setSelected}) => {
+const Preview = ({contentArray, selected, setSelected}) => {
     return (
         <PreviewContainer>
             <h2>미리보기</h2>
             <div>
-                {parse(content)}
+                {contentArray.length > 0 && contentArray.map((content, index) =>
+                    <Section content={content} key={index}/>
+                )}
                 <SimpleSlider images={selected} setImages={setSelected}/>
             </div>
         </PreviewContainer>

@@ -1,5 +1,20 @@
 import Editor from "./components/Editor";
-import {useState} from "react";
+import React, {useState} from "react";
+import Preview from "./components/Preview";
+import styled from 'styled-components'
+
+const Main = styled.div`
+  display:flex;
+  height: 100vh;
+  >div {
+    flex: 1;
+    padding: 2em 3em;
+    overflow-y: scroll;
+  }
+  @media (max-width:1450px){
+    flex-direction: column;
+  }
+`
 
 function App() {
     const [images, setImages] = useState([
@@ -43,10 +58,24 @@ function App() {
             id: 10,
             dataURL: "https://picsum.photos/seed/10/600",
         },])
+    const [content ,setContent] = useState('');
+    const [contentArray, setContentArray] = useState([])
+    const [selected, setSelected] = useState([])
     return (
-        <div className="App" style={{paddingBottom: '-100px'}}>
-            <Editor images={images} setImages={setImages}/>
-        </div>
+        <Main className="App">
+            <Editor images={images}
+                    setImages={setImages}
+                    content={content}
+                    setContent={setContent}
+                    selected={selected}
+                    setSelected={setSelected}
+                    setContentArray={setContentArray}
+            />
+            <Preview contentArray={contentArray}
+                     selected={selected}
+                     setSelected={setSelected}
+            />
+        </Main>
     );
 }
 

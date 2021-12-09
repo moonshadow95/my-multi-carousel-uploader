@@ -12,6 +12,7 @@ const Modal = styled.div`
     top: 0;
     left: 0;
     padding:150px 0;
+    width: 100%;
     z-index: 1;
     background: rgba(230, 230, 230, 0.8);
     .ant-card{
@@ -50,7 +51,7 @@ const Modal = styled.div`
 // }
 
 const RmiUploader = ({images, setImages, setSelected, editorData, setEditorData, setContent }) => {
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     const hideModal = () => {
         setVisible(false);
     };
