@@ -34,7 +34,6 @@ export default class SimpleSlider extends Component {
             slidesToShow: 1,
             slidesToScroll: 1
         };
-        console.log(`images`, images)
         return (
             <Wrap>
                 <Slider {...settings}>

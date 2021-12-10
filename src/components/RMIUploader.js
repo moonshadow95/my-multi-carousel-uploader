@@ -24,9 +24,12 @@ const Modal = styled.div`
     }
     .modal__close{
       display:block;
-      margin: 20px 20px 0 auto;
+      margin: 20px 20px 20px auto;
       padding: 10px;
       background-color: #000;
+      svg {
+        margin-bottom: -6px;
+      }
     }
 `
 // import Axios from 'axios';
@@ -65,10 +68,7 @@ const RmiUploader = ({images, setImages, setSelected, setImageArray, selected, i
         setImages(Array.from(new Set([...images,...data])))
     }
     const onSelect = (data) => {
-        data.map(
-            item => setSelected(prev=>[...prev, item])
-        )
-        setImageArray(selected)
+        setImageArray(prev => [...prev, data])
         setVisible(prev => !prev)
     };
     const onRemove = (id) => {

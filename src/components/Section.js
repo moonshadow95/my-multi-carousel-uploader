@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import parse from "html-react-parser";
 import SimpleSlider from "./SimpleSlider";
 
-const Section = ({content, imageArray}) => {
-    const [paragraph, setParagraph]=useState(content);
+const Section = ({content, images}) => {
     return (
         <div>
-            {parse(paragraph.content)}
+            {content && parse(content.content)}
+            {images && <SimpleSlider images={images} />}
         </div>
     );
 }

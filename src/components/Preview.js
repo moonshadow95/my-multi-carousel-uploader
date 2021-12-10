@@ -16,15 +16,14 @@ const PreviewContainer = styled.div`
 
 const Preview = ({contentArray, imageArray}) => {
     console.log('imageArray', imageArray)
+    console.log('contentArray', contentArray)
     return (
         <PreviewContainer>
             <h2>미리보기</h2>
-
-            {contentArray.length > 0 && contentArray.map((content, index) =>
-                <div>
-                    <Section content={content} key={index}/>
-                    <SimpleSlider images={imageArray} />
-                </div>
+            { contentArray.length > 0 && contentArray.map((content, index) =>
+                imageArray.map((images,index)=>
+                    <Section content={content} key={index} images={images} />
+                )
             )}
         </PreviewContainer>
 )};

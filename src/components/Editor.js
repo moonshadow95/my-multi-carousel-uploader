@@ -23,6 +23,7 @@ const Editor = ({images,setImages, content, setContent, selected, setSelected,se
     const onSaveClick=()=>{
         setContentArray(prev => [...prev, {content}])
         setContent("")
+        setImageArray([])
     }
     return(
         <Wrap>
